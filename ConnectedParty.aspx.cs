@@ -16,16 +16,19 @@ namespace ConnectedPartyForm
     {
         SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectedPartyConnectionString"].ConnectionString);
 
-        public static class EmailBodyClass
-        {
-            public static string Emailbody { get; set; }
-        }
+        //public static class EmailBodyClass
+        //{
+        //    //public static string Emailbody { get; set; }
+
+        //}
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            Session["Emailbody"] = "";
             
         }
 
+        //the relative info table is updated on submit
         protected void btn_saveRelativeInfo_Click(object sender, EventArgs e)
         {
             conn.Open();
@@ -41,7 +44,7 @@ namespace ConnectedPartyForm
                 cmd = new SqlCommand(getuserid, conn);
                 temp = Convert.ToInt32(cmd.ExecuteScalar().ToString());
 
-                //update the relativeinfo table
+                //update the relative info table
                 cmd = new SqlCommand(updateSelfEmployed, conn);
                 cmd.Parameters.AddWithValue("@r_relativename", r_relativeName.Text);
                 cmd.Parameters.AddWithValue("@r_relation", r_relation.Text);
@@ -108,8 +111,9 @@ namespace ConnectedPartyForm
                 Response.Write("error" + ex.ToString());
             }
 
-            EmailBodyClass.Emailbody = String.Format(EmailBodyClass.Emailbody + "\r\n \r\n    Relative Name : {0} \r\n    Relation : {1} \r\n    Entity Name : {2} \r\n    Entity Type : {3} \r\n    Business Type : {4} \r\n    Job Title : {5} \r\n    Shares : {6} \r\n    Country of Incorporation : {7} \r\n    Additional Information : {8} \r\n", r_relativeName.Text, r_relation.Text, r_entityName.Text, r_entityType.Text, r_businessType.Text, r_jobTitle.Text, r_shares.Text, r_countryofIncorporation.Text, r_additional.Text);
-           
+            //EmailBodyClass.Emailbody = String.Format(EmailBodyClass.Emailbody + "\r\n \r\n    Relative Name : {0} \r\n    Relation : {1} \r\n    Entity Name : {2} \r\n    Entity Type : {3} \r\n    Business Type : {4} \r\n    Job Title : {5} \r\n    Shares : {6} \r\n    Country of Incorporation : {7} \r\n    Additional Information : {8} \r\n", r_relativeName.Text, r_relation.Text, r_entityName.Text, r_entityType.Text, r_businessType.Text, r_jobTitle.Text, r_shares.Text, r_countryofIncorporation.Text, r_additional.Text);
+            HttpContext.Current.Session["Emailbody"] = String.Format(Session["Emailbody"] + "\r\n \r\n    Relative Name : {0} \r\n    Relation : {1} \r\n    Entity Name : {2} \r\n    Entity Type : {3} \r\n    Business Type : {4} \r\n    Job Title : {5} \r\n    Shares : {6} \r\n    Country of Incorporation : {7} \r\n    Additional Information : {8} \r\n", r_relativeName.Text, r_relation.Text, r_entityName.Text, r_entityType.Text, r_businessType.Text, r_jobTitle.Text, r_shares.Text, r_countryofIncorporation.Text, r_additional.Text);
+
             r_relativeName.Text = "";
             r_additional.Text = "";
             r_businessType.Text = "";
@@ -198,7 +202,8 @@ namespace ConnectedPartyForm
                     Response.Write("error" + ex.ToString());
                 }
 
-            EmailBodyClass.Emailbody = String.Format(EmailBodyClass.Emailbody + "\r\n \r\n    Entity Name : {0} \r\n    Entity Type : {1} \r\n    Business Type : {2} \r\n    Job Title : {3} \r\n    Shares : {4} \r\n    Country of Incorporation : {5} \r\n    Additional Information : {6} \r\n", se_entityName.Text, se_entityType.Text, se_businessType.Text, se_jobTitle.Text, se_shares.Text, se_countryofIncorporation.Text, se_additional.Text);
+            //EmailBodyClass.Emailbody = String.Format(EmailBodyClass.Emailbody + "\r\n \r\n    Entity Name : {0} \r\n    Entity Type : {1} \r\n    Business Type : {2} \r\n    Job Title : {3} \r\n    Shares : {4} \r\n    Country of Incorporation : {5} \r\n    Additional Information : {6} \r\n", se_entityName.Text, se_entityType.Text, se_businessType.Text, se_jobTitle.Text, se_shares.Text, se_countryofIncorporation.Text, se_additional.Text);
+            HttpContext.Current.Session["Emailbody"] = String.Format(Session["Emailbody"].ToString() + "\r\n \r\n    Entity Name : {0} \r\n    Entity Type : {1} \r\n    Business Type : {2} \r\n    Job Title : {3} \r\n    Shares : {4} \r\n    Country of Incorporation : {5} \r\n    Additional Information : {6} \r\n", se_entityName.Text, se_entityType.Text, se_businessType.Text, se_jobTitle.Text, se_shares.Text, se_countryofIncorporation.Text, se_additional.Text);
 
             se_additional.Text = "";
             se_businessType.Text = "";
@@ -287,7 +292,8 @@ namespace ConnectedPartyForm
                     Response.Write("error" + ex.ToString());
                 }
 
-            EmailBodyClass.Emailbody = String.Format(EmailBodyClass.Emailbody + "\r\n \r\n    Auditor Name : {0} \r\n    Auditor Position : {1} \r\n    Auditor Department : {2} \r\n    Period Position Held : {3} \r\n    Additional Information : {4} \r\n", aud_Name.Text, aud_Position.Text, aud_Department.Text, aud_PositionHeld.Text, aud_additional.Text);
+            //EmailBodyClass.Emailbody = String.Format(EmailBodyClass.Emailbody + "\r\n \r\n    Auditor Name : {0} \r\n    Auditor Position : {1} \r\n    Auditor Department : {2} \r\n    Period Position Held : {3} \r\n    Additional Information : {4} \r\n", aud_Name.Text, aud_Position.Text, aud_Department.Text, aud_PositionHeld.Text, aud_additional.Text);
+            HttpContext.Current.Session["Emailbody"] = String.Format(Session["Emailbody"] + "\r\n \r\n    Auditor Name : {0} \r\n    Auditor Position : {1} \r\n    Auditor Department : {2} \r\n    Period Position Held : {3} \r\n    Additional Information : {4} \r\n", aud_Name.Text, aud_Position.Text, aud_Department.Text, aud_PositionHeld.Text, aud_additional.Text);
 
             aud_PositionHeld.Text = "";
             aud_Position.Text = "";
@@ -352,6 +358,8 @@ namespace ConnectedPartyForm
             }
 
             conn.Open();
+
+            //check if employee exists
             string checkuser = "select count(*) from EmployeeInfo where Name='" + name.Text + "'";
             System.Console.WriteLine(checkuser);
             string getuserid = "select id from EmployeeInfo where Name = '" + name.Text + "'";
@@ -370,7 +378,7 @@ namespace ConnectedPartyForm
             }
 
             else
-
+                //if employee not exists, create new employee record
                 try
                 {
                     conn.Open();
@@ -396,18 +404,19 @@ namespace ConnectedPartyForm
                 {
                     Response.Write("error" + ex.ToString());
                 }
-
-            //send email to user
+            
             // Send the message
             try {
+
                 using (MailMessage emailMessage = new MailMessage())
                 {
                     emailMessage.From = new MailAddress("connectedparty@trinre.com", "Connected Party");
                     emailMessage.To.Add(new MailAddress(emailaddress.Text, "Receiver"));
                     emailMessage.Bcc.Add(new MailAddress("gabrielle.marhue@trinre.com","Admin"));
-                    emailMessage.Bcc.Add(new MailAddress("karla.lewis@trinre.com", "Admin"));
+                    //emailMessage.Bcc.Add(new MailAddress("karla.lewis@trinre.com", "Admin"));
                     emailMessage.Subject = "Connected Party Form";
-                    emailMessage.Body = "Your Connected Party Form has been received. If you have entered information it will be shown below. \r\n    " + EmailBodyClass.Emailbody;
+                    //emailMessage.Body = "Your Connected Party Form has been received. If you have entered information it will be shown below. \r\n    " + EmailBodyClass.Emailbody;
+                    emailMessage.Body = "Your Connected Party Form has been received. If you have entered information it will be shown below. \r\n    " + HttpContext.Current.Session["Emailbody"];
                     emailMessage.Priority = MailPriority.Normal;
                     using (SmtpClient MailClient = new SmtpClient("192.168.10.8", 25))
                     {
@@ -420,7 +429,7 @@ namespace ConnectedPartyForm
                 Response.Write("error" + ex.ToString());
             }
 
-            EmailBodyClass.Emailbody = "";
+            HttpContext.Current.Session["Emailbody"] = "";
 
             }
     }
