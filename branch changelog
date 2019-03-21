@@ -1,0 +1,5 @@
+This branch was created to address the following issue: 
+If two users are entering and saving info on the form, the email sent will contain all of the information from both. 
+The database entries however will be correct.
+
+Added sessions to the 'emailbody' variable as this is the only variable that stores data from the form outside of the database to build the body of the email.
