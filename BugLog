@@ -1,0 +1,3 @@
+Known bugs
+
+1. When two users are entering data and saving, the email sent collates all data. However the database saves the correct information.
